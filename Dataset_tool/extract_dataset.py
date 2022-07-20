@@ -44,6 +44,10 @@ if os.path.exists(reduced_txt):
 		jpg_list = json.load(txt)
 		print("extracting from a reduced dataset...")
 		print(f"reduced dataset contains {len(jpg_list)} images")
+		for jpg_item in jpg_list:
+			filename, fileformat = os.path.splitext(jpg_item)
+			if fileformat != ".jpg":
+				jpg_list.remove(jpg_item)
 else:
 	jpg_list = []
 	for f in os.listdir(input_dir):
@@ -75,10 +79,11 @@ while True:
 
 	shutil.copy(img_path, img_target)
 	shutil.copy(xml_path, xml_target)
-	jpg_list.remove(filename+'.jpg')
+	jpg_list.remove(shuffled_jpg_list[i])
 	counter -= 1
 	print(filename)
 	i += 1
+
 
 	if counter == 0:
 		print('all files are moved')
